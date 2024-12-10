@@ -4,7 +4,7 @@ from tqdm import tqdm
 
 def extraer_texto_de_imagen(ruta_imagen, lector):
     try:
-        resultados = lector.readtext(ruta_imagen, detail=0, paragraph=True)
+        resultados = lector.readtext(ruta_imagen, detail=0, paragraph=True, contrast_ths=0.7, adjust_contrast=0.5)
         return '\n'.join(resultados)
     except Exception as e:
         print(f"Error al procesar {ruta_imagen}: {e}")
@@ -26,7 +26,7 @@ def procesar_carpeta(carpeta, lector, extensiones):
 def main():
     carpeta_imagenes = "/home/steven/Descargas/Caso74"
     extensiones = ('.png', '.jpg', '.jpeg', '.tiff', '.bmp', '.gif')
-    lector = easyocr.Reader(['es'], gpu=True)
+    lector = easyocr.Reader(['es'], gpu=True, model_storage_directory='./models', download_enabled=True)
     for raiz, dirs, archivos in os.walk(carpeta_imagenes):
         tiene_imagenes = any(archivo.lower().endswith(extensiones) for archivo in archivos)
         if tiene_imagenes:
