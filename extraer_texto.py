@@ -15,7 +15,9 @@ def procesar_carpeta(carpeta, lector, extensiones):
     archivos = [archivo for archivo in os.listdir(carpeta) if archivo.lower().endswith(extensiones)]
     if not archivos:
         return
-    for archivo in tqdm(archivos, desc=f"Procesando imágenes en {os.path.basename(carpeta)}"):
+    carpeta_nombre = os.path.basename(carpeta)
+    textos.append(f"### Título: {carpeta_nombre} ###\n")
+    for archivo in tqdm(archivos, desc=f"Procesando imágenes en {carpeta_nombre}"):
         ruta_completa = os.path.join(carpeta, archivo)
         texto_extraido = extraer_texto_de_imagen(ruta_completa, lector)
         textos.append(f"--- Texto de {archivo} ---\n{texto_extraido}\n")
